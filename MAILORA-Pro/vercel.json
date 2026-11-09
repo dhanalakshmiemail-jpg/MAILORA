@@ -1,0 +1,20 @@
+{
+  "services": {
+    "frontend": {
+      "root": "MAILORA-Pro/frontend"
+    },
+    "backend": {
+      "root": "MAILORA-Pro/backend"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": { "service": "backend" }
+    },
+    {
+      "source": "/(.*)",
+      "destination": { "service": "frontend" }
+    }
+  ]
+}
