@@ -1,0 +1,20 @@
+import { Router } from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { z } from "zod";
+import User from "../models/User";
+import { protect, AuthRequest } from "../middleware/auth";
+import { asyncHandler } from "../utils/asyncHandler";
+import { AppError } from "../utils/AppError";
+const router = Router();
+const loginSchema = z.object({ email: z.string().email(), password: z.string().min(8) });
+router.post("/login", asyncHandler(async (req, res) => {
+  const parsed = loginSchema.safeParse(req.body);
+  if (!parsed.success) throw new AppError(400, "Enter a valid email and password (minimum 8 characters)");
+  const user = await User.findOne({ email: parsed.data.email.toLowerCase() }).select("+password");
+  if (!user || !(await bcrypt.compare(parsed.data.password, user.password))) throw new AppError(401, "Incorrect email or password");
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: (process.env.JWT_EXPIRES_IN || "7d") as jwt.SignOptions["expiresIn"] });
+  res.json({ success: true, data: { token, user: { id: user.id, name: user.name, email: user.email, role: user.role } } });
+}));
+router.get("/me", protect, asyncHandler(async (req: AuthRequest, res) => res.json({ success: true, data: req.user })));
+export default router;

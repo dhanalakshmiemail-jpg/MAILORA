@@ -1,0 +1,4 @@
+import { Card, CardContent, Box, Typography } from "@mui/material";
+export default function StatCard({ label, value, note, icon, tone="#8B5CF6" }: {label:string;value:string|number;note:string;icon:React.ReactNode;tone?:string}) {
+ return <Card><CardContent sx={{p:2.5,"&:last-child":{pb:2.5}}}><Box sx={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}><Box><Typography color="text.secondary" variant="body2" fontWeight={600}>{label}</Typography><Typography variant="h4" sx={{mt:1,fontVariantNumeric:"tabular-nums"}}>{value}</Typography></Box><Box sx={{width:44,height:44,borderRadius:3,display:"grid",placeItems:"center",color:tone,bgcolor:`${tone}1A`}}>{icon}</Box></Box><Typography variant="caption" color="text.secondary" sx={{display:"block",mt:1.5}}>{note}</Typography></CardContent></Card>;
+}

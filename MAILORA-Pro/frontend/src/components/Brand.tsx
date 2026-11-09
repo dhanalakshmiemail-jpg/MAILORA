@@ -1,0 +1,3 @@
+import { Box, Typography } from "@mui/material";
+import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
+export default function Brand() { return <Box sx={{ display:"flex",alignItems:"center",gap:1.2 }}><Box sx={{ width:38,height:38,borderRadius:2.5,display:"grid",placeItems:"center",background:"linear-gradient(135deg,#8B5CF6,#22D3EE)",boxShadow:"0 8px 30px #8b5cf644" }}><AutoAwesomeRoundedIcon sx={{color:"#fff"}}/></Box><Box><Typography fontWeight={900} letterSpacing={2} lineHeight={1}>MAILORA</Typography><Typography variant="caption" color="text.secondary" letterSpacing={1.1}>CAMPAIGN INTELLIGENCE</Typography></Box></Box>; }
